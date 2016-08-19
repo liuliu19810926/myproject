@@ -1,10 +1,10 @@
 /*
  ============================================================================
- Name        : helloworld.c
+ Name        : main.c
  Author      : liu
  Version     :
  Copyright   : Your copyright notice
- Description : Hello World in C, Ansi-style
+ Description : C test code, Ansi-style
  ============================================================================
  */
 
@@ -90,8 +90,17 @@ int main(void) {
 	printf("This is a demo precedence of post-increment:\n");
 	printf("array=|%d, %d|\n", array[0], array[1]);
 	printf("\"array\" is at address %#x\n", (unsigned int)array);
+
 	p = array;
 	printf("The result of \"p = array\" is p = %#x\n", (unsigned int)p);
+	j = *p++;
+	printf("The result of \"j = *p++;\" is j = %d, p = %#x, array=|%d, %d|\n", j, (unsigned int)p, array[0], array[1]);
+
+	p = array;
+	printf("The result of \"p = array\" is p = %#x\n", (unsigned int)p);
+	j = *(p++);
+	printf("The result of \"j = *(p++);\" is j = %d, p = %#x, array=|%d, %d|\n", j, (unsigned int)p, array[0], array[1]);
+
 	j = --*p;
 	printf("The result of \"j = --*p;\" is j = %d, p = %#x, array=|%d, %d|\n", j, (unsigned int)p, array[0], array[1]);
 	j = --*p++;
