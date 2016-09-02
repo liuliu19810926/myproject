@@ -12,11 +12,13 @@
 #include <stdlib.h>
 #include <math.h>
 #include <limits.h>
+#include <string.h>
 
 #define get2DArray(array, row, column) ((column)[(row)[(array)]])
 
 void getBinaryString(int dec, int num_bits, char *str);
 void printSectionSeparator(int n);
+int getSummationChecksum(char *data, int length);
 
 int main(void) {
 
@@ -146,13 +148,38 @@ int main(void) {
 	free((void *)rbin);
 	printf("\n");
 
+	// Calculate checksum with simple summation of all characters in the data
+	printSectionSeparator(20);
+	char data[30];
+	int chksum = 0;
+
+	memset(data, 0, sizeof(data));
+	strcpy(data, "$d000000000001#");
+	chksum = getSummationChecksum(data, strlen(data));
+	printf("Summation checksum of \"%s\" = 0x%04X\r\n", data, chksum);
+
+	memset(data, 0, sizeof(data));
+	strcpy(data, "$e000000640004#");
+	chksum = getSummationChecksum(data, strlen(data));
+	printf("Summation checksum of \"%s\" = 0x%04X\r\n", data, chksum);
+
+	memset(data, 0, sizeof(data));
+	strcpy(data, "$e000000680004#");
+	chksum = getSummationChecksum(data, strlen(data));
+	printf("Summation checksum of \"%s\" = 0x%04X\r\n", data, chksum);
+
+	memset(data, 0, sizeof(data));
+	strcpy(data, "$e0000006C0004#");
+	chksum = getSummationChecksum(data, strlen(data));
+	printf("Summation checksum of \"%s\" = 0x%04X\r\n", data, chksum);
+
 	printSectionSeparator(20);
 	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
 	return EXIT_SUCCESS;
 }
 
 // This function gets the the binary string
-// <NOTE>:
+// <Note>:
 // (1) This function gets the binary string.
 //
 // (2) dec - decimal number.
@@ -178,4 +205,22 @@ void printSectionSeparator(int n)
 	for(i = 0; i < n; n--)
 		printf("=");
 	printf("\r\n");
+}
+
+// This function calculates the checksum of input data with simple summation of all characters in the data
+// <Note>:
+// (1) This function calculates the checksum of input data with simple summation of all characters in the data.
+//
+// (2) data - input data.
+//	   length - data length.
+int getSummationChecksum(char *data, int length)
+{
+	int i;
+	int chksum = 0;
+
+	for(i = 0; i < length; i++)
+	{
+		chksum += *(data + i);
+	}
+	return chksum;
 }
